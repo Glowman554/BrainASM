@@ -9,31 +9,34 @@ OBJS = $(patsubst %.c, %.o, $(CSRC))
 BFSRC = $(call rwildcard,./test,*.bf)
 BFOBJS = $(patsubst %.bf, %.elf, $(BFSRC))
 
-all: bfasm.elf $(BFOBJS)
+OUTPUT = brainasm.elf
+INSTALL = /usr/bin/brainasm
 
-bfasm.elf: $(OBJS)
+all: $(OUTPUT) $(BFOBJS)
+
+$(OUTPUT): $(OBJS)
 	$(CC) $(CFLAGS) $^ -o $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # %.elf: %.bf
-#	./bfasm.elf x86_64-linux-nasm $< /tmp/bfasm.asm
+#	./$(OUTPUT) x86_64-linux-nasm $< /tmp/bfasm.asm
 #	nasm /tmp/bfasm.asm -o /tmp/bfasm.o -f elf64
 #	gcc /tmp/bfasm.o -no-pie -o $@
 
 # %.elf: %.bf
-#	./bfasm.elf x86_64-linux-gas $< /tmp/bfasm.S
+#	./$(OUTPUT) x86_64-linux-gas $< /tmp/bfasm.S
 #	gcc /tmp/bfasm.S -c -o /tmp/bfasm.o
 #	gcc /tmp/bfasm.o -no-pie -o $@
 
 %.elf: %.bf
-	./bfasm.elf aarch64-linux-gas $< /tmp/bfasm.S
+	./$(OUTPUT) aarch64-linux-gas $< /tmp/bfasm.S
 	gcc -g /tmp/bfasm.S -c -o /tmp/bfasm.o
 	gcc -g /tmp/bfasm.o -no-pie -o $@
 
-install: bfasm.elf
-	sudo cp $< /usr/bin/bfasm
+install: $(OUTPUT)
+	sudo cp $< $(INSTALL)
 
 clean:
-	rm $(OBJS) $(BFOBJS) bfasm.elf
+	rm $(OBJS) $(BFOBJS) $(OUTPUT)
