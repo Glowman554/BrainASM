@@ -23,7 +23,7 @@ void push_id(int id, int** ids, int* num_ids) {
 int count_sym(char s, FILE* f) {
 	int count = 0;
 
-	char c = 0;
+	int c = 0;
 	while ((c = getc(f)) != EOF) {
 		if (c == s) {
 			count++;
@@ -42,7 +42,8 @@ int count_sym(char s, FILE* f) {
 
 generator_t* generators[] = {
 	&x86_64_linux_gas,
-	&x86_64_linux_nasm
+	&x86_64_linux_nasm,
+	&aarch64_linux_gas
 };
 
 int main(int argc, char* argv[]) {
@@ -72,7 +73,7 @@ int main(int argc, char* argv[]) {
 	int num_ids = 0;
 	int curr_id = 0;
 
-	char c = 0;
+	int c = 0;
 	while ((c = getc(in)) != EOF) {
 		char buf[0xff] = { 0 };
 
