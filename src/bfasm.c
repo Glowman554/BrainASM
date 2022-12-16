@@ -43,7 +43,8 @@ int count_sym(char s, FILE* f) {
 generator_t* generators[] = {
 	&x86_64_linux_gas,
 	&x86_64_linux_nasm,
-	&aarch64_linux_gas
+	&aarch64_linux_gas,
+	&phoenix_none_as
 };
 
 int main(int argc, char* argv[]) {

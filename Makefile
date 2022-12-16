@@ -30,10 +30,15 @@ $(OUTPUT): $(OBJS)
 #	gcc /tmp/bfasm.S -c -o /tmp/bfasm.o
 #	gcc /tmp/bfasm.o -no-pie -o $@
 
+# %.elf: %.bf
+# 	./$(OUTPUT) aarch64-linux-gas $< /tmp/bfasm.S
+# 	gcc -g /tmp/bfasm.S -c -o /tmp/bfasm.o
+# 	gcc -g /tmp/bfasm.o -no-pie -o $@
+
 %.elf: %.bf
-	./$(OUTPUT) aarch64-linux-gas $< /tmp/bfasm.S
-	gcc -g /tmp/bfasm.S -c -o /tmp/bfasm.o
-	gcc -g /tmp/bfasm.o -no-pie -o $@
+	./$(OUTPUT) phoenix-none-as $< /tmp/bfasm.S
+	cp /tmp/bfasm.S out.S
+	phoenix-as /tmp/bfasm.S $@
 
 install: $(OUTPUT)
 	sudo cp $< $(INSTALL)
