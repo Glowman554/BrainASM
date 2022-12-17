@@ -8,7 +8,9 @@ function compile {
 
 make
 
-compile test/hello.bf hello.asm hello.elf
-compile test/yapi.bf yapi.asm yapi.elf
-compile test/cellsize.bf cellsize.asm cellsize.elf
-compile test/triangle.bf triangle.asm triangle.elf
+mkdir -p out
+
+compile test/hello.bf out/hello.asm out/hello.elf
+compile test/yapi.bf out/yapi.asm out/yapi.elf
+compile test/cellsize.bf out/cellsize.asm out/cellsize.elf
+compile test/triangle.bf out/triangle.asm out/triangle.elf

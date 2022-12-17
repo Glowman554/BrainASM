@@ -44,7 +44,8 @@ generator_t* generators[] = {
 	&x86_64_linux_gas,
 	&x86_64_linux_nasm,
 	&aarch64_linux_gas,
-	&phoenix_none_as
+	&phoenix_none_as,
+	&any_any_gcc
 };
 
 int main(int argc, char* argv[]) {
