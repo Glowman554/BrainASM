@@ -1,7 +1,7 @@
 set -ex
 
 function compile {
-	./brainasm.elf x86_64-linux-nasm $1 $2
+	./brainasm.elf -t x86_64-linux-nasm -o $2 $1
 	nasm $2 -o $3.o -f elf64
 	gcc $3.o -o $3 -no-pie -static
 }

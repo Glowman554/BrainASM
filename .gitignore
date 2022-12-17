@@ -3,3 +3,4 @@
 *.o
 *.S
 out/
+a.out

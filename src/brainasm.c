@@ -50,23 +50,69 @@ generator_t* generators[] = {
 };
 
 int main(int argc, char* argv[]) {
-	if (argc != 4) {
-		printf("Usage: %s <target> <in> <out>\n", argv[0]);
+	char* out_str = "a.out";
+	char* in_str = NULL;
+	char* target_str = "any-any-gcc";
+
+	int idx = 1;
+	while (idx < argc) {
+		if (strcmp(argv[idx], "-o") == 0) {
+			if (idx + 1 < argc) {
+				idx++;
+				out_str = argv[idx];
+			} else {
+				printf("Error: -o requires an argument\n");
+				return -1;
+			}
+		} else if (strcmp(argv[idx], "-t") == 0) {
+			if (idx + 1 < argc) {
+				idx++;
+				target_str = argv[idx];
+			} else {
+				printf("Error: -t requires an argument\n");
+				return -1;
+			}
+		} else if (strcmp(argv[idx], "-h") == 0) {
+			printf("Usage: %s [-o <out>] [-t <target>] <in>\n", argv[0]);
+			printf("Supported targets:\n");
+			for (int i = 0; i < sizeof(generators) / sizeof(generators[0]); i++) {
+				printf("\t%s\n", generators[i]->name);
+			}
+			return 0;
+		} else {
+			if (in_str == NULL) {
+				in_str = argv[idx];
+			} else {
+				printf("Error: Too many arguments\n");
+				return -1;
+			}
+		}
+
+		idx++;
+	}
+
+	if (in_str == NULL) {
+		printf("Please specfy a input file!\n");
 		return -1;
 	}
 
-	FILE* in = fopen(argv[2], "r");
-	FILE* out = fopen(argv[3], "w");
+	FILE* in = fopen(in_str, "r");
+	FILE* out = fopen(out_str, "w");
+
+	if (in == NULL || out == NULL) {
+		printf("Could not open input or output file!\n");
+		return -1;
+	}
 
 	generator_t* generator = NULL;
 	for (int i = 0; i < sizeof(generators) / sizeof(generators[0]); i++) {
-		if (strcmp(generators[i]->name, argv[1]) == 0) {
+		if (strcmp(generators[i]->name, target_str) == 0) {
 			generator = generators[i];
 			break;
 		}
 	}
 	if (generator == NULL) {
-		printf("Target %s not found!\n", argv[1]);
+		printf("Target %s not found!\n", target_str);
 		return -1;
 	}
 
