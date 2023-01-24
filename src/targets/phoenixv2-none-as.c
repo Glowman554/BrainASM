@@ -10,43 +10,26 @@ void phoenixv2_none_as_emit_clean_exit(FILE* f) {
 	emit("jmpi 0xffff", f, true);
 }
 
-void phoenixv2_none_as_emit_ptr_plus(int amount, FILE* f) {
-	static int add_ov_skip_id = 0;
+// 1380
 
-	emit("cmpi r15, 0", f, true); // clear possible ov
+void phoenixv2_none_as_emit_ptr_plus(int amount, FILE* f) {
+	emit("cfg", f, true);
 
 	char buf[0xff] = { 0 };
 	sprintf(buf, "addi r0, %d", amount);
 	emit(buf, f, true);
 
-	sprintf(buf, "jnoi addr(aos%d)", add_ov_skip_id);
-	emit(buf, f, true);
-
-	emit("addi r1, 1", f, true);
-
-	sprintf(buf, "aos%d:", add_ov_skip_id);
-	emit(buf, f, false);
-
-	add_ov_skip_id++;
+	emit("adoi r1, 1", f, true);
 }
-void phoenixv2_none_as_emit_ptr_minus(int amount, FILE* f) {
-	static int sub_ov_skip_id = 0;
 
-	emit("cmpi r15, 0", f, true); // clear possible ov
+void phoenixv2_none_as_emit_ptr_minus(int amount, FILE* f) {
+	emit("cfg", f, true);
 
 	char buf[0xff] = { 0 };
 	sprintf(buf, "subi r0, %d", amount);
 	emit(buf, f, true);
 
-	sprintf(buf, "jnoi addr(sos%d)", sub_ov_skip_id);
-	emit(buf, f, true);
-
-	emit("subi r1, 1", f, true);
-
-	sprintf(buf, "sos%d:", sub_ov_skip_id);
-	emit(buf, f, false);
-
-	sub_ov_skip_id++;
+	emit("sboi r1, 1", f, true);
 }
 
 void phoenixv2_none_as_emit_ptr_deref_plus(int amount, FILE* f) {
