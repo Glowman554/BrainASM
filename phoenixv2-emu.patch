@@ -1,0 +1,74 @@
+From fcc943a7046799f638d13154713171a494303e90 Mon Sep 17 00:00:00 2001
+From: Glowman554 <glowman434@gmail.com>
+Date: Sun, 29 Jan 2023 00:51:23 +0100
+Subject: [PATCH] bf
+
+---
+ install_tools.sh       | 18 +++++++++---------
+ tools/emulator/debug.c |  2 ++
+ tools/emulator/main.c  |  3 ++-
+ 3 files changed, 13 insertions(+), 10 deletions(-)
+
+diff --git a/install_tools.sh b/install_tools.sh
+index 86f94ad..8fdffe2 100644
+--- a/install_tools.sh
++++ b/install_tools.sh
+@@ -13,14 +13,14 @@ function build {
+ 	make -C $1
+ }
+ 
+-build tools/assembler
+-build tools/disassembler
++#build tools/assembler
++#build tools/disassembler
+ build tools/emulator
+-build tools/microcode
+-build tools/visual_eumlator
++#build tools/microcode
++#build tools/visual_eumlator
+ 
+-install tools/assembler/assembler.elf as
+-install tools/disassembler/disassembler.elf disasm
+-install tools/emulator/emulator.elf emu
+-install tools/microcode/microcode.elf microcode
+-install tools/visual_eumlator/visual_eumlator.elf emu-visual
++#install tools/assembler/assembler.elf as
++#install tools/disassembler/disassembler.elf disasm
++install tools/emulator/emulator.elf emu-bf
++#install tools/microcode/microcode.elf microcode
++#install tools/visual_eumlator/visual_eumlator.elf emu-visual
+diff --git a/tools/emulator/debug.c b/tools/emulator/debug.c
+index 844898f..3e7d463 100644
+--- a/tools/emulator/debug.c
++++ b/tools/emulator/debug.c
+@@ -3,11 +3,13 @@
+ #include <stdio.h>
+ 
+ void debugf(const char* fmt, ...) {
++/*
+     char print_buf[1024] = { 0 };
+     va_list args;
+     va_start(args, fmt);
+     vsprintf(print_buf, fmt, args);
+     va_end(args);
+     printf("%s\n", print_buf);
++*/
+ }
+ 
+diff --git a/tools/emulator/main.c b/tools/emulator/main.c
+index 7a9d834..0ad769c 100644
+--- a/tools/emulator/main.c
++++ b/tools/emulator/main.c
+@@ -24,7 +24,8 @@ uint8_t cpu_io_read(uint16_t addr) {
+ }
+ 
+ void cpu_io_write(uint16_t addr, uint8_t val) {
+-	debugf("writing byte 0x%x to io at 0x%x", val, addr);
++//	debugf("writing byte 0x%x to io at 0x%x", val, addr);
++	printf("%c", val);
+ }
+ 
+ void cpu_tout(bool val) {
+-- 
+2.30.2
+
