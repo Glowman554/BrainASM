@@ -7,35 +7,43 @@ void phoenixv2_none_as_emit_initial_setup(FILE* f) {
 	emit("lad B, 0x0", f, true);
 }
 void phoenixv2_none_as_emit_clean_exit(FILE* f) {
-	emit("jmpi 0xffff", f, true);
+	emit("jmp 0xffff", f, true);
 }
-
-// 1380
 
 void phoenixv2_none_as_emit_ptr_plus(int amount, FILE* f) {
 	emit("cfg", f, true);
 
 	char buf[0xff] = { 0 };
-	sprintf(buf, "addi r0, %d", amount);
+	sprintf(buf, "add r0, lo(%d)", amount);
 	emit(buf, f, true);
 
-	emit("adoi r1, 1", f, true);
+	emit("ado r1, 1", f, true);
+
+	if (amount > 0xff) {
+		sprintf(buf, "add r1, hi(%d)", amount);
+		emit(buf, f, true);
+	}
 }
 
 void phoenixv2_none_as_emit_ptr_minus(int amount, FILE* f) {
 	emit("cfg", f, true);
 
 	char buf[0xff] = { 0 };
-	sprintf(buf, "subi r0, %d", amount);
+	sprintf(buf, "sub r0, lo(%d)", amount);
 	emit(buf, f, true);
 
-	emit("sboi r1, 1", f, true);
+	emit("sbo r1, 1", f, true);
+	
+	if (amount > 0xff) {
+		sprintf(buf, "sub r1, hi(%d)", amount);
+		emit(buf, f, true);
+	}
 }
 
 void phoenixv2_none_as_emit_ptr_deref_plus(int amount, FILE* f) {
 	char buf[0xff] = { 0 };
 	emit("ldr r5, A", f, true);
-	sprintf(buf, "addi r5, %d", amount);
+	sprintf(buf, "add r5, %d", amount);
 	emit(buf, f, true);
 	emit("wtr A, r5", f, true);
 
@@ -43,7 +51,7 @@ void phoenixv2_none_as_emit_ptr_deref_plus(int amount, FILE* f) {
 void phoenixv2_none_as_emit_ptr_deref_minus(int amount, FILE* f) {
 	char buf[0xff] = { 0 };
 	emit("ldr r5, A", f, true);
-	sprintf(buf, "subi r5, %d", amount);
+	sprintf(buf, "sub r5, %d", amount);
 	emit(buf, f, true);
 	emit("wtr A, r5", f, true);
 }
@@ -54,15 +62,15 @@ void phoenixv2_none_as_emit_loop_begin(int id, FILE* f) {
 	emit(buf, f, false);
 
 	emit("ldr r5, A", f, true);
-	emit("cmpi r5, 0", f, true);
+	emit("cmp r5, 0", f, true);
 
-	sprintf(buf, "jeqi addr(l%d_exit)", id);
+	sprintf(buf, "jeq l%d_exit", id);
 	emit(buf, f, true);
 }
 void phoenixv2_none_as_emit_loop_end(int id, FILE* f) {
 	char buf[0xff] = { 0 };
 
-	sprintf(buf, "jmpi addr(l%d)", id);
+	sprintf(buf, "jmp l%d", id);
 	emit(buf, f, true);
 
 	sprintf(buf, "l%d_exit:", id);
