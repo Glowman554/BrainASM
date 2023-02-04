@@ -26,6 +26,21 @@ void avr_m328p_avra_emit_initial_setup(FILE* f) {
 	emit("ldi r16, high(0x8ff)", f, true);
 	emit("out 0x3e, r16", f, true);
 
+	// clear sram (0x0100 - 0x08ff)
+	emit("ldi r30, low(0x0100)", f, true);
+	emit("ldi r31, high(0x0100)", f, true);
+	emit("ldi r16, 0", f, true);
+	emit("ldi r17, 1", f, true);
+	emit("clear_loop:", f, false);
+	emit("st Z, r16", f, true);
+	emit("add r30, r17", f, true);
+	emit("adc r31, r16", f, true);
+	emit("cpi r30, 0xff", f, true);
+	emit("brne clear_loop", f, true);
+	emit("cpi r31, 0x08", f, true);
+	emit("brne clear_loop", f, true);
+
+
 	emit("call USART0_init", f, true);
 
 	// use z index register for tape

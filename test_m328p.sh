@@ -16,5 +16,5 @@ compile test/cellsize.bf out/cellsize.asm
 compile test/echo.bf out/echo.asm
 
 # avra -fI out/hello.asm
-#sudo avrdude -c stk500v1 -p m328p -b 19200 -P /dev/ttyUSB0 -U flash:w:out/hello.hex
-#screen /dev/ttyACM0 9600
+sudo avrdude -c arduino -p m328p -b 115200 -P /dev/ttyACM0 -U flash:w:out/triangle.hex
+screen /dev/ttyACM0 9600
