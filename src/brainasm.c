@@ -47,7 +47,8 @@ generator_t* generators[] = {
 	&phoenix_none_as,
 	&any_any_gcc,
 	&armv6_pico_gcc,
-	&armv6_pico_gas
+	&armv6_pico_gas,
+	&avr_m328p_avra
 };
 
 int main(int argc, char* argv[]) {
