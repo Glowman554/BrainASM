@@ -4,3 +4,4 @@
 *.S
 out/
 a.out
+!m328p.asm
