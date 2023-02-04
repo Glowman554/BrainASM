@@ -45,6 +45,7 @@ generator_t* generators[] = {
 	&x86_64_linux_nasm,
 	&aarch64_linux_gas,
 	&phoenix_none_as,
+	&phoenixv2_none_as,
 	&any_any_gcc,
 	&armv6_pico_gcc,
 	&armv6_pico_gas,
