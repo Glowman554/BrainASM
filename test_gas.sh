@@ -1,7 +1,7 @@
 set -ex
 
 function compile {
-	./brainasm.elf -t x86_64-linux-gas -o $2 $1
+	./brainasm.elf -t aarch64-linux-gas -o $2 $1
 	gcc $2 -o $3.o -c -no-pie
 	gcc $3.o -o $3 -no-pie -static
 }

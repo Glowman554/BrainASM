@@ -2,14 +2,23 @@
 #include <targets.h>
 
 void armv6_pico_gas_emit_initial_setup(FILE* f) {
-	printf("--- WARNING --- you need to call bf_main with a pointer to the tape MANUALY!!!\n");
+	emit(".cpu cortex-m0plus", f, false);
+	emit(".section .data", f, false);
+	emit("tape:", f, false);
+	emit(".space 30000", f, true);
+	emit(".code 16", f, false);
+	emit(".thumb_func", f, false);
+
 	emit(".section .text", f, false);
-	emit(".global bf_main", f, false);
+	emit(".global main", f, false);
 	emit(".extern putchar", f, false);
 	emit(".extern getchar", f, false);
-	emit("bf_main:", f, false);
+	emit("main:", f, false);
 	emit("push {lr}", f, true);
-	emit("mov r7, r0", f, true);
+	emit("bl stdio_init_all", f, true);
+	emit("ldr r0, =30000", f, true);
+	emit("bl sleep_ms", f, true);
+	emit("ldr r7, =tape", f, true);
 }
 void armv6_pico_gas_emit_clean_exit(FILE* f) {
 	emit("mov r0, #0", f, true);
