@@ -15,7 +15,7 @@ void avr_t85_avra_emit_initial_setup(FILE* f) {
 		emit("reti", f, true);
 	}
 
-	emit(".include \"t85.asm\"", f, false);
+	emit(".include \"res/t85.asm\"", f, false);
 
 	emit("_entry:", f, false);
 

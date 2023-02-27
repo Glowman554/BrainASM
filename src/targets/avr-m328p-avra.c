@@ -15,7 +15,7 @@ void avr_m328p_avra_emit_initial_setup(FILE* f) {
 		emit("reti", f, true);
 	}
 
-	emit(".include \"m328p.asm\"", f, false);
+	emit(".include \"res/m328p.asm\"", f, false);
 
 	emit("_entry:", f, false);
 

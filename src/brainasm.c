@@ -49,6 +49,7 @@ generator_t* generators[] = {
 	&any_any_gcc,
 	&armv6_pico_gcc,
 	&armv6_pico_gas,
+	&armv7m_stm32_gas,
 	&avr_m328p_avra,
 	&avr_t85_avra
 };
