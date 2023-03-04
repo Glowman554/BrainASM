@@ -2,69 +2,69 @@
 #include <targets.h>
 
 void x86_64_linux_gas_emit_initial_setup(FILE* f) {
-	emit(".section .data", f, false);
-	emit("tape: .space 30000", f, false);
-	emit(".section .text", f, false);
-	emit(".global main", f, false);
-	emit(".extern putchar", f, false);
-	emit(".extern getchar", f, false);
-	emit("main:", f, false);
-	emit("movq $tape, %rbx", f, true);
+	emit(".section .data", f, 0);
+	emit("tape: .space 30000", f, 0);
+	emit(".section .text", f, 0);
+	emit(".global main", f, 0);
+	emit(".extern putchar", f, 0);
+	emit(".extern getchar", f, 0);
+	emit("main:", f, 0);
+	emit("movq $tape, %rbx", f, 1);
 }
 void x86_64_linux_gas_emit_clean_exit(FILE* f) {
-	emit("movq $0, %rax", f, true);
-	emit("ret", f, true);
+	emit("movq $0, %rax", f, 1);
+	emit("ret", f, 1);
 }
 
 void x86_64_linux_gas_emit_ptr_plus(int amount, FILE* f) {
 	char buf[0xff] = { 0 };
 	sprintf(buf, "addq $%d, %%rbx", amount);
-	emit(buf, f, true);
+	emit(buf, f, 1);
 }
 void x86_64_linux_gas_emit_ptr_minus(int amount, FILE* f) {
 	char buf[0xff] = { 0 };
 	sprintf(buf, "subq $%d, %%rbx", amount);
-	emit(buf, f, true);
+	emit(buf, f, 1);
 }
 
 void x86_64_linux_gas_emit_ptr_deref_plus(int amount, FILE* f) {
 	char buf[0xff] = { 0 };
 	sprintf(buf, "addb $%d, (%%rbx)", amount);
-	emit(buf, f, true);
+	emit(buf, f, 1);
 }
 void x86_64_linux_gas_emit_ptr_deref_minus(int amount, FILE* f) {
 	char buf[0xff] = { 0 };
 	sprintf(buf, "subb $%d, (%%rbx)", amount);
-	emit(buf, f, true);
+	emit(buf, f, 1);
 }
 
 void x86_64_linux_gas_emit_loop_begin(int id, FILE* f) {
 	char buf[0xff] = { 0 };
 	sprintf(buf, "_%d_loop:", id);
-	emit(buf, f, false);
+	emit(buf, f, 0);
 
-	emit("cmpb $0, (%rbx)", f, true);
+	emit("cmpb $0, (%rbx)", f, 1);
 
 	sprintf(buf, "je _%d_loop_exit", id);
-	emit(buf, f, true);
+	emit(buf, f, 1);
 }
 void x86_64_linux_gas_emit_loop_end(int id, FILE* f) {
 	char buf[0xff] = { 0 };
 
 	sprintf(buf, "jmp _%d_loop", id);
-	emit(buf, f, true);
+	emit(buf, f, 1);
 
 	sprintf(buf, "_%d_loop_exit:", id);
-	emit(buf, f, false);
+	emit(buf, f, 0);
 }
 
 void x86_64_linux_gas_emit_stdin_read(FILE* f) {
-	emit("call getchar", f, true);
-	emit("movb %al, (%rax)", f, true);
+	emit("call getchar", f, 1);
+	emit("movb %al, (%rax)", f, 1);
 }
 void x86_64_linux_gas_emit_stdout_write(FILE* f) {
-	emit("movb (%rbx), %dil", f, true);
-	emit("call putchar", f, true);
+	emit("movb (%rbx), %dil", f, 1);
+	emit("call putchar", f, 1);
 }
 
 generator_t x86_64_linux_gas = {

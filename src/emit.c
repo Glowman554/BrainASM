@@ -1,7 +1,7 @@
 #include <generator.h>
 
-void emit(char* instr, FILE* f, bool indent) {
-	if (indent) {
+void emit(char* instr, FILE* f, int indent) {
+	for (int i = 0; i < indent; i++) {
 		fputc('\t', f);
 	}
 	fputs(instr, f);

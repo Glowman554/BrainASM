@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-void emit(char* instr, FILE* f, bool indent);
+void emit(char* instr, FILE* f, int indent);
 
 typedef struct generator {
 	char name[0xff];
