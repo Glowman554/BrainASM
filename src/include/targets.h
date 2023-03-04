@@ -14,3 +14,4 @@ extern generator_t armv7m_stm32_gas;
 extern generator_t avr_m328p_avra;
 extern generator_t avr_t85_avra;
 extern generator_t riscv_esp32_gas;
+extern generator_t xtensa_esp32_gas;

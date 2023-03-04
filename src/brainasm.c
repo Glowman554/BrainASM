@@ -52,7 +52,8 @@ generator_t* generators[] = {
 	&armv7m_stm32_gas,
 	&avr_m328p_avra,
 	&avr_t85_avra,
-	&riscv_esp32_gas
+	&riscv_esp32_gas,
+	&xtensa_esp32_gas
 };
 
 int main(int argc, char* argv[]) {
