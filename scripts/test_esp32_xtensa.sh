@@ -13,4 +13,4 @@ compile test/triangle.bf out/triangle.S
 compile test/yapi.bf out/yapi.S
 compile test/cellsize.bf out/cellsize.S
 compile test/echo.bf out/echo.S
-cp out/hello.S ./esp32/main/main.s
+# cp out/hello.S ./esp32/main/main.s
