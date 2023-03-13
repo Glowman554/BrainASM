@@ -47,6 +47,7 @@ generator_t* generators[] = {
 	&phoenix_none_as,
 	&phoenixv2_none_as,
 	&any_any_gcc,
+	&any_any_firestorm,
 	&armv6_pico_gcc,
 	&armv6_pico_gas,
 	&armv7m_stm32_gas,
