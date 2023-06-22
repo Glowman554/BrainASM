@@ -41,6 +41,7 @@ int count_sym(char s, FILE* f) {
 }
 
 generator_t* generators[] = {
+	&x86_microos_fasm,
 	&x86_64_linux_gas,
 	&x86_64_linux_nasm,
 	&aarch64_linux_gas,
