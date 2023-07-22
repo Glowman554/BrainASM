@@ -1,0 +1,10 @@
+brainasm -t x86-microos-fasm -o cellsize.asm cellsize.bf
+fasm cellsize.asm
+brainasm -t x86-microos-fasm -o echo.asm echo.bf
+fasm echo.asm
+brainasm -t x86-microos-fasm -o hello.asm hello.bf
+fasm hello.asm
+brainasm -t x86-microos-fasm -o triangle.asm triangle.bf
+fasm triangle.asm
+brainasm -t x86-microos-fasm -o yapi.asm yapi.bf
+fasm yapi.asm

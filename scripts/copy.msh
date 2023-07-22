@@ -1,0 +1,6 @@
+cp cellsize.bf fat32_0:/cellsize.bf
+cp echo.bf fat32_0:/echo.bf
+cp hello.bf fat32_0:/hello.bf
+cp triangle.bf fat32_0:/triangle.bf
+cp yapi.bf fat32_0:/yapi.bf
+cp compile.msh fat32_0:/compile.msh

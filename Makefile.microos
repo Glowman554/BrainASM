@@ -1,0 +1,32 @@
+SRCS = $(shell find ./src -name '*.[cS]')
+OBJS = $(addsuffix .o,$(basename $(SRCS)))
+
+CFLAGS = -m32 -Wall -g -fno-stack-protector -nostdinc -I src/include -Wno-builtin-declaration-mismatch -fno-builtin -Ires/libs/include
+LDFLAGS = -melf_i386
+
+LOAD_ADDR = 0xA0000000
+
+PROGRAM = brainasm.elf
+
+prog: $(PROGRAM)
+
+$(PROGRAM): $(OBJS)
+	i686-linux-gnu-ld $(LDFLAGS) -Ttext=$(LOAD_ADDR) -o $@ $^ $(EXTRA_OBJS) ./res/libs/libc.o
+
+%.o: %.c
+	@echo CC $^
+	@i686-linux-gnu-gcc $(CFLAGS) -c -o $@ $^
+
+clean:
+	rm -f $(OBJS) $(PROGRAM)
+
+MicroOS:
+	git clone https://github.com/Glowman554/MicroOS
+
+copy: MicroOS
+	mkdir -p MicroOS/initrd/bin
+	cp $(PROGRAM) MicroOS/initrd/bin
+
+	mkdir -p MicroOS/initrd/bf
+	cp ./scripts/*.msh MicroOS/initrd/bf
+	cp ./test/* MicroOS/initrd/bf

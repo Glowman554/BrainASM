@@ -134,8 +134,6 @@ int main(int argc, char* argv[]) {
 
 	int c = 0;
 	while ((c = getc(in)) != EOF) {
-		char buf[0xff] = { 0 };
-
 		switch (c) {
 			case '<':
 				generator->emit_ptr_minus(count_sym('<', in) + 1, out);

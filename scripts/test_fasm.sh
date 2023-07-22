@@ -13,3 +13,4 @@ compile test/hello.bf out/hello.asm
 compile test/yapi.bf out/yapi.asm
 compile test/cellsize.bf out/cellsize.asm 
 compile test/triangle.bf out/triangle.asm 
+compile test/echo.bf out/echo.asm 
